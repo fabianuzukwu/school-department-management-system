@@ -1,4 +1,5 @@
 const Department = require('../models/department')
+const Course = require('../models/course')
 
 exports.createDepartment = async (req, res) => {
     try {
@@ -117,6 +118,7 @@ exports.deleteDepartment = async (req, res) => {
             })
         }
 
+        await Course.deleteMany({departmentId: id})
         await Department.findByIdAndDelete(id)
         res.status(200).json({
             message: 'Department deleted successfully'
