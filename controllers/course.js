@@ -56,8 +56,8 @@ exports.getOneCourse = async ( req, res ) => {
     try {
         const { id } = req.params;
 
-        const Course = await Course.findById( id ).populate( 'departmentId' );
-        if ( !Course ) {
+        const course = await Course.findById( id ).populate( 'departmentId' );
+        if ( !course ) {
             return res.status( 404 ).json( {
                 message: 'Course not found'
             } );
@@ -65,7 +65,7 @@ exports.getOneCourse = async ( req, res ) => {
 
         res.status( 200 ).json( {
             message: 'Course found',
-            data: Course
+            data: course
         } );
     } catch ( error ) {
         res.status( 500 ).json( {
@@ -78,10 +78,11 @@ exports.updateCourse = async ( req, res ) => {
     try {
         const { id } = req.params;
         const { courseCode, title, creditUnits } = req.body;
-        const Course = await Course.findById( id );
-        if ( !Course ) {
+        const course = await Course.findById( id );
+        if ( !course ) {
             return res.status( 404 ).json( {
-                message: 'Course not found'
+                message: 'Course not found',
+            
             } );
         }
 
@@ -104,9 +105,9 @@ exports.updateCourse = async ( req, res ) => {
 exports.deleteCourse = async ( req, res ) => {
     try {
         const { id } = req.params;
-        const Course = await Course.findById( id );
+        const course = await Course.findById( id );
 
-        if ( !Course ) {
+        if ( !course ) {
             return res.status( 404 ).json( {
                 message: 'Course not found'
             } );
